@@ -6,7 +6,7 @@ services:
       - postgres-data:/var/lib/postgresql/data
   web:
     build: .
-    command: bundle exec rails s -e production
+    command: bundle exec rails s -e development
     volumes:
       - .:/myapp
     ports:

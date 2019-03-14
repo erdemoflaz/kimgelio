@@ -10,6 +10,7 @@
   </head>
 
   <body>
+    <%= @current_user.present? ? "hoşgeldin #{@current_user.email}" : 'hoşgeldin ziyaretçi' %>
     <%= yield %>
   </body>
 </html>
