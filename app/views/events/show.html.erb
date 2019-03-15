@@ -2,4 +2,7 @@
 <%= @event.title %>
 <br>
 <%= @event.description %>
+<br>
+<%= link_to 'Baş vur', invitations_path(event_id: @event.id), method: :post %>
+<br>
 <%= link_to 'Sil', @event, method: :delete, data: { confirm: 'EMİNMİSİNNN ???' } %>
