@@ -1,9 +1,59 @@
 <br>
-<%= @event.title %>
 <br>
-<%= @event.description %>
-<br>
-<%= link_to 'Baş vur', invitations_path(event_id: @event.id), method: :post %>
-<br>
-<%= link_to 'Sil', @event, method: :delete, data: { confirm: 'EMİNMİSİNNN ???' } %>
-a
+<div class="container">
+  <div class="card-box task-detail">
+    <div class="media mt-0 m-b-30">
+      <img class="d-flex mr-3 rounded-circle" alt="64x64" src="https://avatars.io/twitter/e2d3m" style="width: 48px; height: 48px;float: left; margin-right: 20px;">
+      <div class="media-body">
+        <h5 class="media-heading mb-0 mt-0"><%= @event.user.email %></h5>
+        <span class="badge badge-success">Etkinlik Düzenliyici</span>
+      </div>
+    </div>
+
+    <h4 class="m-b-20"><%= @event.title %></h4>
+
+    <p class="text-muted">
+      <%= @event.description %>
+    </p>
+
+    <ul class="list-inline task-dates m-b-0 mt-5">
+      <li>
+        <h5 class="m-b-5">Etkinlik Adresi</h5>
+        <p> <%= @event.location %> </p>
+      </li>
+      <li>
+        <h5 class="m-b-5">Etkinlik Tarihi</h5>
+        <p> <%= @event.date %> </p>
+      </li>
+
+    </ul>
+    <div class="clearfix"></div>
+
+    <div class="assign-team mt-4">
+      <h5 class="m-b-5">Katılma isteği gönderenler</h5>
+      <div>
+        <a href="#"> <img class="rounded-circle thumb-sm" alt="64x64" src="https://avatars.io/twitter/e2d3m"> </a>
+        <a href="#"> <img class="rounded-circle thumb-sm" alt="64x64" src="https://avatars.io/twitter/e2d3m"> </a>
+        <a href="#"> <img class="rounded-circle thumb-sm" alt="64x64" src="https://avatars.io/twitter/e2d3m"> </a>
+        <a href="#"> <img class="rounded-circle thumb-sm" alt="64x64" src="https://avatars.io/twitter/e2d3m"> </a>
+      </div>
+    </div>
+
+    <div class="attached-files mt-4">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="text-right m-t-30">
+            <% if @current_user.present? && @event.user == @current_user %>
+              <%= link_to 'Sil', @event, method: :delete, class: 'btn btn-danger waves-effect', data: { confirm: 'EMİNMİSİNNN ???' } %>
+            <% end %>
+            <% if @event.user != @current_user %>
+              <%= link_to 'Baş vur', invitations_path(event_id: @event.id), class: 'btn btn-success waves-effect', method: :post %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+

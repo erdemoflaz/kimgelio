@@ -5,12 +5,81 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <style>
+      .menu
+      {
+        background-color: #3498db;
+        width: 100%;
+        height: auto;
+        padding: 10px 10px;
+        margin: 0px;
+        z-index: 1;
+        opacity: 0.9;
+      }
+
+      .menu  .navbar-nav > .active > a
+      {
+        background-color : #04A3ED;
+        color: white;
+        font-weight: bold;
+      }
+
+      .menu  .navbar-nav >  li >  a
+      {
+        font-size: 13px;
+        color: white;
+        padding: 10px 35px;
+
+      }
+      .menu  .navbar-nav >  li >  a:hover
+      {
+        background-color: #04A3ED;
+      }
+
+      .navbar-header > a
+      {
+        font-family: 'Ubuntu Condensed', sans-serif;
+        margin: 0px;
+        text-decoration: none;
+        color: white;
+        font-size: 25px;
+        padding: 5px 30px;
+      }
+      .navbar-header > a:hover
+      {
+        text-decoration: none;
+        color: #04A3ED;
+      }
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= @current_user.present? ? "hoşgeldin #{@current_user.email}" : 'hoşgeldin ziyaretçi' %>
-    <%= yield %>
+  <div class="menu">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a href="#">KimGelio</a>
+      </div>
+      <div>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#" ><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+          <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          <li><a href="#"><%= @current_user.present? ? "hoşgeldin #{@current_user.email}" : 'hoşgeldin ziyaretçi' %></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="row">
+        <%= yield %>
+      </div>
+    </div>
+
   </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </html>

@@ -1,8 +1,41 @@
-<%= form_for @event do |f| %>
-  <%= f.text_field :title %>
-  <%= f.text_area :description %>
-  <%= f.text_field :location %>
-  <%= f.date_field :date, prefix: DateTime.now.to_date%>
-  <%= f.number_field :limit %>
-  <%= f.submit "Oluştur"%>
-<% end %>
+<div class="row">
+  <br><br>
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <div class="card-box">
+      <h4 class="m-t-0 m-b-30 header-title">Yeni Etkinlik Oluştur</h4>
+
+      <%= form_for @event do |f| %>
+
+        <div class="form-group">
+          <label for="exampleInputEmail1">Başlık</label>
+          <%= f.text_field :title, class: 'form-control', placeholder: 'Etkinlik başlığını giriniz' %>
+          <small id="emailHelp" class="form-text text-muted">Etkinlik başlığınızı ilgi çekici şekilde oluşturun.</small>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleInputEmail1">Açıklama</label>
+          <%= f.text_area :description, class: 'form-control', placeholder: 'Etkinlik içeriğini giriniz' %>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleInputEmail1">Etkinlik Adresi</label>
+          <%= f.text_field :location, class: 'form-control', placeholder: 'Etkinlik adresini giriniz' %>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleInputEmail1">Etkinlik Tarihi</label>
+          <%= f.date_field :date, prefix: DateTime.now.to_date, class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleInputEmail1">Katılımcı Sayısı</label>
+          <%= f.number_field :limit, class: 'form-control' %>
+        </div>
+          <%= f.submit "Oluştur", class: 'btn btn-primary' %>
+
+      <% end %>
+    </div>
+  </div>
+  <div class="col-md-2"></div>
+</div>
