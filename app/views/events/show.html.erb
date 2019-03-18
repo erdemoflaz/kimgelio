@@ -56,18 +56,24 @@
 
   </div>
 </div>
-
+<h3>Waitings</h3>
 <% @invitations.waiting.each do |inv| %>
-<br>
   <%= inv.user.email %>
+  <%= link_to 'Accept', accept_invite_path(inv.id) %>
+  <%= link_to 'Decline', decline_invite_path(inv.id) %>
+<br>
 <% end %>
 
+<h3>Accepted</h3>
 <% @invitations.accepted.each do |inv| %>
-<br>
   <%= inv.user.email %>
+  <%= link_to 'Cancel', decline_invite_path(inv.id) %>
+  <br>
 <% end %>
 
+<h3>Declined</h3>
 <% @invitations.declined.each do |inv| %>
-<br>
   <%= inv.user.email %>
+  <%= link_to 'Accept', accept_invite_path(inv.id) %>
+  <br>
 <% end %>
