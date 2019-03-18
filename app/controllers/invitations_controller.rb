@@ -1,4 +1,6 @@
 class InvitationsController < ApplicationController
+before_action :set_invitation, only: %i[accept decline]
+
   def new
     @invitation = Invitation.new
   end
@@ -12,8 +14,24 @@ class InvitationsController < ApplicationController
     end
   end
 
+  def accept
+    if @invitation.update(status: 1)
+      redirect_back fallback_location: root_path
+    end
+  end
+
+  def decline
+    if @invitation.update(status: 2)
+      redirect_back fallback_location: root_path
+    end
+  end
+
   private
   def invitations_params
     params.require(:invitation).permit(:event_id)
+  end
+
+  def set_invitation
+    @invitation = Invitation.find(params[:id])
   end
 end
