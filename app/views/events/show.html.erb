@@ -57,3 +57,17 @@
   </div>
 </div>
 
+<% @invitations.waiting.each do |inv| %>
+<br>
+  <%= inv.user.email %>
+<% end %>
+
+<% @invitations.accepted.each do |inv| %>
+<br>
+  <%= inv.user.email %>
+<% end %>
+
+<% @invitations.declined.each do |inv| %>
+<br>
+  <%= inv.user.email %>
+<% end %>
