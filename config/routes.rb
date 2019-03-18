@@ -3,7 +3,7 @@ Rails.application.routes.draw do
              controllers: {
                  registrations: 'users/registrations'
                   }
-
+  get 'users/:id', to: 'profiles#show', as: 'user_show'
   root to: 'welcomes#index'
 
   resources :events do

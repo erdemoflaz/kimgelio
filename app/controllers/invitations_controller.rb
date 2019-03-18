@@ -8,7 +8,7 @@ before_action :protect, only: %i[accept decline]
 
   def create
     @event = Event.find(params[:event_id])
-    @invitation = current_user.invitation.new
+    @invitation = current_user.invitations.new
     @invitation.update(status: 0, user_id: @current_user.id, event_id:@event.id)
     if @invitation.save
       redirect_back fallback_location: root_path
