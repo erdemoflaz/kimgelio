@@ -1,6 +1,7 @@
 class InvitationsController < ApplicationController
+before_action :set_events
 before_action :set_invitation, only: %i[accept decline]
-
+before_action :protect, only: %i[accept decline]
   def new
     @invitation = Invitation.new
   end
@@ -33,5 +34,15 @@ before_action :set_invitation, only: %i[accept decline]
 
   def set_invitation
     @invitation = Invitation.find(params[:id])
+  end
+
+  def set_events
+    @event = Event.find(params[:event_id])
+  end
+
+  def protect
+    if @current_user != @event.user
+     redirect_back fallback_location: root_path
+    end
   end
 end
