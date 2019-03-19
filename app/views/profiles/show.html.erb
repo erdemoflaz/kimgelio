@@ -1,0 +1,19 @@
+<%= @user.name_surname%>
+<br>
+<%= @user.email%>
+<br>
+<h4>Events</h4>
+<% @events.each do |event| %>
+  <%= event.title %>
+  <br>
+<% end %>
+<h4>Joined Events</h4>
+<% @acceptedEvents.each do |event| %>
+  <%= event.title %>
+  <br>
+<% end %>
+<h4>Declined Events</h4>
+<% @declinedEvents.each do |event| %>
+  <%= event.title %>
+  <br>
+<% end %>

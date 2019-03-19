@@ -28,7 +28,7 @@
       {
         font-size: 13px;
         color: white;
-        padding: 10px 35px;
+        padding: 10px 20px;
 
       }
       .menu  .navbar-nav >  li >  a:hover
@@ -61,13 +61,27 @@
   <div class="menu">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a href="#">KimGelio</a>
+        <a href="/">KimGelio</a>
       </div>
       <div>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#" ><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-          <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-          <li><a href="#"><%= @current_user.present? ? "hoşgeldin #{@current_user.email}" : 'hoşgeldin ziyaretçi' %></a></li>
+          <li><a href="<%= root_path %>">Anasayfa</a></li>
+          <li><a href="<%= events_path %>">Etkinlikler</a></li>
+
+          <% if @current_user.present? %>
+              <li style="background: #2ecc71;"><a href="<%= new_event_path %>">Etkinlik oluştur</a></li>
+
+              <li style="background: #54abe2;">
+                <%= link_to user_show_path(@current_user) do%>
+                  <i class="fa fa-plus"></i>
+                  <%= @current_user.present? ? "#{@current_user.name_surname}" : 'hoşgeldin ziyaretçi' %>
+                <% end %>
+              </li>
+
+        <% else %>
+              <li><a href="<%= new_user_registration_path %>" ><span class="glyphicon glyphicon-user"></span> Kayıt Ol</a></li>
+              <li><a href="<%= new_user_session_path %>"><span class="glyphicon glyphicon-log-in"></span> Giriş Yap</a></li>
+          <% end %>
         </ul>
       </div>
     </div>

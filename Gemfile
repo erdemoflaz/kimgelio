@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.5.3'
+ruby '2.5.1'
 gem 'pg', '~> 0.18'
 gem 'devise'
 gem 'bootstrap', '~> 4.1.3'

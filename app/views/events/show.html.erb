@@ -46,8 +46,13 @@
             <% if @current_user.present? && @event.user == @current_user %>
               <%= link_to 'Sil', @event, method: :delete, class: 'btn btn-danger waves-effect', data: { confirm: 'EMİNMİSİNNN ???' } %>
             <% end %>
+<<<<<<< HEAD
             <% if @event.user != @current_user && @current_user.invitations.where(event_id: @event) %>
               <%= link_to 'Baş vur', invitations_path(event_id: @event.id), class: 'btn btn-success waves-effect', method: :post %>
+=======
+            <% if @event.user != @current_user %>
+              <%= link_to 'Baş vur', event_invitations_path(@event), class: 'btn btn-success waves-effect', method: :post %>
+>>>>>>> f9b4d6fa1f33e16730feca6e1affa4444a2477d3
             <% end %>
           </div>
         </div>
@@ -59,21 +64,27 @@
 <h3>Waitings</h3>
 <% @invitations.waiting.each do |inv| %>
   <%= inv.user.email %>
-  <%= link_to 'Accept', accept_invite_path(inv.id) %>
-  <%= link_to 'Decline', decline_invite_path(inv.id) %>
+  <% if @current_user == @event.user %>
+    <%= link_to 'Accept', event_accept_invite_path(@event, inv) %>
+    <%= link_to 'Decline', event_decline_invite_path(@event, inv) %>
+  <% end %>
 <br>
 <% end %>
 
 <h3>Accepted</h3>
 <% @invitations.accepted.each do |inv| %>
   <%= inv.user.email %>
-  <%= link_to 'Cancel', decline_invite_path(inv.id) %>
+  <% if @current_user == @event.user %>
+    <%= link_to 'Cancel', event_decline_invite_path(@event, inv) %>
+  <% end %>
   <br>
 <% end %>
 
 <h3>Declined</h3>
 <% @invitations.declined.each do |inv| %>
   <%= inv.user.email %>
-  <%= link_to 'Accept', accept_invite_path(inv.id) %>
+  <% if @current_user == @event.user %>
+    <%= link_to 'Accept', event_accept_invite_path(@event, inv) %>
+  <% end %>
   <br>
 <% end %>
