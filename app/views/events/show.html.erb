@@ -46,13 +46,12 @@
             <% if @current_user.present? && @event.user == @current_user %>
               <%= link_to 'Sil', @event, method: :delete, class: 'btn btn-danger waves-effect', data: { confirm: 'EMİNMİSİNNN ???' } %>
             <% end %>
-<<<<<<< HEAD
-            <% if @event.user != @current_user && @current_user.invitations.where(event_id: @event) %>
-              <%= link_to 'Baş vur', invitations_path(event_id: @event.id), class: 'btn btn-success waves-effect', method: :post %>
-=======
             <% if @event.user != @current_user %>
-              <%= link_to 'Baş vur', event_invitations_path(@event), class: 'btn btn-success waves-effect', method: :post %>
->>>>>>> f9b4d6fa1f33e16730feca6e1affa4444a2477d3
+              <% if !@current_user.invitations.where(event_id: @event.id).first %>
+                <%= link_to 'Baş Vur', event_invitations_path(@event), class: 'btn btn-success waves-effect', method: :post %>
+              <% else %>
+                <%= link_to 'İptal Et', event_invitation_path(@event), class: 'btn btn-danger waves-effect', method: :delete, data: { confirm: 'EMİNMİSİNNN ???' } %>
+              <% end %>
             <% end %>
           </div>
         </div>

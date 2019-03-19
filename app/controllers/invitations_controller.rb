@@ -17,9 +17,9 @@ before_action :protect, only: %i[accept decline]
 
   def destroy
     @event = Event.find(params[:event_id])
-    @invitation = @current_user.invitations.where(event_id: @event)
-    @invitation.destroy
-    redirect_back, fallback_location: root_path
+    @invitation = @current_user.invitations.where(event_id: @event.id).first
+    @invitation.delete
+    redirect_back fallback_location: root_path
   end
 
   def accept
