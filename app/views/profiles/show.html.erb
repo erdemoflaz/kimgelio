@@ -1,19 +1,119 @@
-<%= @user.name_surname%>
-<br>
-<%= @user.email%>
-<br>
-<h4>Events</h4>
-<% @events.each do |event| %>
-  <%= event.title %>
-  <br>
-<% end %>
-<h4>Joined Events</h4>
-<% @acceptedEvents.each do |event| %>
-  <%= event.title %>
-  <br>
-<% end %>
-<h4>Declined Events</h4>
-<% @declinedEvents.each do |event| %>
-  <%= event.title %>
-  <br>
-<% end %>
+<div class="content">
+  <div class="container-fluid">
+
+
+    <div class="row">
+      <div class="col-md-4">
+        <!-- Personal-Information -->
+        <div class="card-box">
+          <h4 class="header-title mt-0 m-b-20"><%= @user.name_surname %></h4>
+          <div class="panel-body">
+            <hr>
+
+            <div class="text-left">
+              <p class="text-muted font-13"><strong>Ad Soyad :</strong> <span class="m-l-15">J<%= @user.name_surname %></span></p>
+
+              <p class="text-muted font-13"><strong>Email :</strong> <span class="m-l-15"><%= @user.email %></span></p>
+
+              <p class="text-muted font-13"><strong>Konum :</strong> <span class="m-l-15">Türkiye</span></p>
+
+            </div>
+          </div>
+        </div>
+        <!-- Personal-Information -->
+
+        <div class="card-box ribbon-box">
+          <div class="ribbon ribbon-primary">Son Etkinlikleri</div>
+          <div class="clearfix"></div>
+          <div class="inbox-widget">
+
+            <% @events.each do |event| %>
+                <a href="#">
+                  <div class="inbox-item">
+                    <div class="inbox-item-img"><img src="https://pixelmator-pro.s3.amazonaws.com/community/avatar_empty@2x.png" class="rounded-circle" alt=""></div>
+                    <p class="inbox-item-author"><%= event.title %></p>
+                    <p class="inbox-item-text"><%= event.user.name_surname %></p>
+                    <p class="inbox-item-date m-t-10">
+                      <a href="<%= event_path event %>" class="btn btn-icon btn-sm waves-effect waves-light btn-success"> Gözat </a>
+                    </p>
+                  </div>
+                </a>
+
+            <% end %>
+
+
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="col-md-8">
+
+        <div class="row">
+
+          <div class="col-sm-4">
+            <div class="card-box tilebox-one">
+              <i class="icon-layers float-right text-muted"></i>
+              <h6 class="text-muted text-uppercase mt-0">Etkinlikleri</h6>
+              <h2 class="m-b-20" data-plugin="counterup"><%= @user.events.count %></h2>
+              <span class="badge badge-custom"> </span> <span class="text-muted">Etkinlik oluşturdu</span>
+            </div>
+          </div><!-- end col -->
+
+          <div class="col-sm-4">
+            <div class="card-box tilebox-one">
+              <i class="icon-paypal float-right text-muted"></i>
+              <h6 class="text-muted text-uppercase mt-0">Katıldıkları</h6>
+              <h2 class="m-b-20"><span data-plugin="counterup"><%= @acceptedEvents.count %></span></h2>
+              <span class="badge badge-danger"> </span> <span class="text-muted">Etkinliğe katıldı</span>
+            </div>
+          </div><!-- end col -->
+
+          <div class="col-sm-4">
+            <div class="card-box tilebox-one">
+              <i class="icon-rocket float-right text-muted"></i>
+              <h6 class="text-muted text-uppercase mt-0">Reddedildiği</h6>
+              <h2 class="m-b-20" data-plugin="counterup"><%= @declinedEvents.count %></h2>
+              <span class="badge badge-custom"> </span> <span class="text-muted">Etkinlikten reddedildi</span>
+            </div>
+          </div><!-- end col -->
+
+        </div>
+        <!-- end row -->
+
+        <div class="card-box">
+          <h4 class="header-title mb-3">Katıldığı Etkinlikler</h4>
+
+          <div class="table-responsive">
+            <table class="table m-b-0">
+              <thead>
+              <tr>
+                <th>id</th>
+                <th>Etkinlik Başlığı</th>
+                <th>Etkinlik Tarihi</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @acceptedEvents.each do |event| %>
+                  <tr>
+                    <td><%= event.id %></td>
+                    <td><%= event.title %></td>
+                    <td><%= event.date %></td>
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+      <!-- end col -->
+
+    </div>
+    <!-- end row -->
+
+
+  </div> <!-- container -->
+
+</div>

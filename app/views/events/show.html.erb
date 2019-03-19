@@ -30,12 +30,16 @@
     <div class="clearfix"></div>
 
     <div class="assign-team mt-4">
-      <h5 class="m-b-5">Katılma isteği gönderenler</h5>
+      <h5 class="m-b-5">Katılımcılar</h5>
       <div>
-        <a href="#"> <img class="rounded-circle thumb-sm" alt="64x64" src="https://avatars.io/twitter/e2d3m"> </a>
-        <a href="#"> <img class="rounded-circle thumb-sm" alt="64x64" src="https://avatars.io/twitter/e2d3m"> </a>
-        <a href="#"> <img class="rounded-circle thumb-sm" alt="64x64" src="https://avatars.io/twitter/e2d3m"> </a>
-        <a href="#"> <img class="rounded-circle thumb-sm" alt="64x64" src="https://avatars.io/twitter/e2d3m"> </a>
+        <div style="display: inline-table;margin-bottom: 31px;">
+          <%= @event.invitations.accepted.count == 0 ? 'henüz bir katılımcı yok' : '' %>
+        </div>
+        <% @event.invitations.accepted.each do |invitation| %>
+            <a href="#" data-toggle="tooltip" data-placement="top" title="<%= invitation.user.name_surname %>">
+              <img src="https://pixelmator-pro.s3.amazonaws.com/community/avatar_empty@2x.png" style="border-radius: 100%" class="rounded-circle thumb-sm" alt="friend">
+            </a>
+        <% end %>
       </div>
     </div>
 
@@ -44,7 +48,7 @@
         <div class="col-sm-12">
           <div class="text-right m-t-30">
             <% if @current_user.present? && @event.user == @current_user %>
-              <%= link_to 'Sil', @event, method: :delete, class: 'btn btn-danger waves-effect', data: { confirm: 'EMİNMİSİNNN ???' } %>
+              <%= link_to 'Sil', @event, method: :delete, class: 'btn btn-danger waves-effect', data: { confirm: 'emin misin?' } %>
             <% end %>
             <% if @event.user != @current_user %>
               <%= link_to 'Baş vur', event_invitations_path(@event), class: 'btn btn-success waves-effect', method: :post %>
@@ -56,30 +60,120 @@
 
   </div>
 </div>
-<h3>Waitings</h3>
-<% @invitations.waiting.each do |inv| %>
-  <%= inv.user.email %>
-  <% if @current_user == @event.user %>
-    <%= link_to 'Accept', event_accept_invite_path(@event, inv) %>
-    <%= link_to 'Decline', event_decline_invite_path(@event, inv) %>
-  <% end %>
-<br>
-<% end %>
 
-<h3>Accepted</h3>
-<% @invitations.accepted.each do |inv| %>
-  <%= inv.user.email %>
-  <% if @current_user == @event.user %>
-    <%= link_to 'Cancel', event_decline_invite_path(@event, inv) %>
-  <% end %>
-  <br>
-<% end %>
 
-<h3>Declined</h3>
-<% @invitations.declined.each do |inv| %>
-  <%= inv.user.email %>
-  <% if @current_user == @event.user %>
-    <%= link_to 'Accept', event_accept_invite_path(@event, inv) %>
-  <% end %>
-  <br>
-<% end %>
+<div class="container">
+  <div class="card-box">
+    <h4 class="header-title m-t-0 m-b-30">Gelen Katılımcı İstekleri</h4>
+
+    <ul class="nav nav-tabs tabs-bordered">
+      <li class="nav-item">
+        <a href="#home-b1" data-toggle="tab" aria-expanded="false" class="nav-link active show">
+          <i class="fi-monitor mr-2"></i> Onay Bekleyenler
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#profile-b1" data-toggle="tab" aria-expanded="true" class="nav-link">
+          <i class="fi-head mr-2"></i> Katılanlar
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#messages-b1" data-toggle="tab" aria-expanded="false" class="nav-link">
+          <i class="fi-mail mr-2"></i> İptal Edilenler
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane" id="home-b1">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>id</th>
+            <th>Ad Soyad</th>
+            <th>Mail Adresi</th>
+            <th>İşlem</th>
+          </tr>
+          </thead>
+          <tbody>
+
+          <% @invitations.waiting.each do |inv| %>
+              <tr>
+                <th scope="row"><%= inv.user.id %></th>
+                <td><%= inv.user.name_surname %></td>
+                <td><%= inv.user.email %></td>
+                <td>
+                  <% if @current_user == @event.user %>
+                      <%= link_to 'Onayla', event_accept_invite_path(@event, inv), class: 'btn btn-success' %>
+                      <%= link_to 'İptal Et', event_decline_invite_path(@event, inv), class: 'btn btn-danger' %>
+                  <% else %>
+                      <button class="btn- btn-warning">onay bekliyor</button>
+                  <% end %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+        <%= @invitations.waiting.count == 0 ? 'hiç kullanıcı yok' : '' %>
+      </div>
+      <div class="tab-pane" id="profile-b1">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>id</th>
+            <th>Ad Soyad</th>
+            <th>Mail Adresi</th>
+            <th>İşlem</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @invitations.accepted.each do |inv| %>
+              <tr>
+                <th scope="row"><%= inv.user.id %></th>
+                <td><%= inv.user.name_surname %></td>
+                <td><%= inv.user.email %></td>
+                <td>
+                  <% if @current_user == @event.user %>
+                      <%= link_to 'İptal Et', event_decline_invite_path(@event, inv), class: 'btn btn-danger' %>
+                  <% else %>
+                      <button class="btn- btn-success">onaylanmış katılımcı</button>
+                  <% end %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+        <%= @invitations.accepted.count == 0 ? 'hiç kullanıcı yok' : '' %>
+      </div>
+      <div class="tab-pane" id="messages-b1">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>id</th>
+            <th>Ad Soyad</th>
+            <th>Mail Adresi</th>
+            <th>İşlem</th>
+          </tr>
+          </thead>
+          <tbody>
+
+          <% @invitations.declined.each do |inv| %>
+              <tr>
+                <th scope="row"><%= inv.user.id %></th>
+                <td><%= inv.user.name_surname %></td>
+                <td><%= inv.user.email %></td>
+                <td>
+                  <% if @current_user == @event.user %>
+                      <%= link_to 'Onayla', event_accept_invite_path(@event, inv), class: 'btn btn-success' %>
+                  <% else %>
+                    <button class="btn- btn-warning">onay bekliyor</button>
+                  <% end %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+        <%= @invitations.declined.count == 0 ? 'hiç kullanıcı yok' : '' %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -3918,7 +3918,9 @@ Tickets
     margin-right: 0; }
 
 .project-box {
-  position: relative; }
+    position: relative;
+    max-height: 306px;
+    overflow: hidden; }
   .project-box .badge {
     position: absolute;
     right: 20px; }
