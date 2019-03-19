@@ -46,7 +46,7 @@
             <% if @current_user.present? && @event.user == @current_user %>
               <%= link_to 'Sil', @event, method: :delete, class: 'btn btn-danger waves-effect', data: { confirm: 'EMİNMİSİNNN ???' } %>
             <% end %>
-            <% if @event.user != @current_user %>
+            <% if @event.user != @current_user && @current_user.invitations.where(event_id: @event) %>
               <%= link_to 'Baş vur', invitations_path(event_id: @event.id), class: 'btn btn-success waves-effect', method: :post %>
             <% end %>
           </div>

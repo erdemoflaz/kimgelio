@@ -14,6 +14,13 @@ before_action :set_invitation, only: %i[accept decline]
     end
   end
 
+  def destroy
+    @event = Event.find(params[:event_id])
+    @invitation = @current_user.invitations.where(event_id: @event)
+    @invitation.destroy
+    redirect_back, fallback_location: root_path
+  end
+
   def accept
     if @invitation.update(status: 1)
       redirect_back fallback_location: root_path
