@@ -70,7 +70,7 @@
 
           <% if @current_user.present? %>
               <li style="background: #2ecc71;"><a href="<%= new_event_path %>">Etkinlik oluştur</a></li>
-
+              <li style="background: #54abe2;"><%= link_to 'Çıkış', destroy_user_session_path, method: :delete %></li>
               <li style="background: #54abe2;">
                 <%= link_to user_show_path(@current_user) do%>
                   <i class="fa fa-plus"></i>
