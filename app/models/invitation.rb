@@ -1,5 +1,5 @@
 class Invitation < ApplicationRecord
-  validates :userid, uniqueness: { scope: :event_id }
+  validates :user_id, uniqueness: { scope: :event_id }
   belongs_to :user
   belongs_to :event
   scope :waiting,  -> { where(status: 0) }
